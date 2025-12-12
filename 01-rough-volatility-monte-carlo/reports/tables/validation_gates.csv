@@ -1,0 +1,7 @@
+gate,statistic,tolerance,units,passed
+Volterra variance -> t^2H,0.021324458843051623,0.05,max rel. error,True
+GBM MC == Black-Scholes,0.12526899357790164,3.5,|z|,True
+Antithetic cuts SE vs crude MC,1.1949088417839917,1.1,SE reduction x,True
+Control variate cuts SE vs crude MC,1.9961560407308205,1.5,SE reduction x,True
+RB martingale: E[S_T] = S0 e^(rT),1.3434048398411702,4.0,|z|,True
+RB eta -> 0 == Black-Scholes,1.3634813078863126,4.0,|z|,True

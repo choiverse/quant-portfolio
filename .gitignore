@@ -1,0 +1,18 @@
+# Large raw datasets (kept out of git; see each project's data/README.md)
+**/data/all_stocks_5yr.csv
+*.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,7 @@
+# Everything needed to run every project and its test suite.
+# Per-project runtime dependencies live in each project's requirements.txt.
+numpy>=1.26
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.7
+pytest>=8.0
