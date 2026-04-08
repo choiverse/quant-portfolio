@@ -1,8 +1,8 @@
 # Quant Research & Development Portfolio
 
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-25%20passing-brightgreen)
-![figures](https://img.shields.io/badge/figures-6%20generated-informational)
+![tests](https://img.shields.io/badge/tests-55%20passing-brightgreen)
+![figures](https://img.shields.io/badge/figures-13%20generated-informational)
 ![licence](https://img.shields.io/badge/licence-MIT-green)
 
 Self-contained quantitative-finance projects, each built end-to-end from raw
@@ -16,8 +16,10 @@ Three rules every project follows:
 2. **Validated against something known.** Where a result can be checked against a
    closed form, an exact moment, or a theoretical scaling law, there is a script
    that does exactly that and exits non-zero if it fails.
-3. **Written up honestly.** Negative results are reported as results, and known
-   limitations get their own section rather than a footnote.
+3. **Written up honestly.** Negative results are reported as results. Where a
+   dataset is defective or a conclusion is weaker than the headline suggests, the
+   README says so — see §5 of Project 02, which points out that its own headline
+   parameter choice is one of the worst cells in its robustness grid.
 
 ---
 
@@ -44,12 +46,32 @@ literature: an at-the-money implied-vol skew decaying as `T^(H−1/2)`.
 
 ---
 
+### [02 · Systematic Cross-Sectional Equity Backtest](02-systematic-equity-backtest)
+
+A dependency-light backtesting engine plus a study of 12-1 momentum and
+short-term reversal on the S&P 500 universe, 2013–2018, evaluated net of costs.
+
+[![cost analysis](02-systematic-equity-backtest/reports/figures/04_cost_analysis.png)](02-systematic-equity-backtest)
+
+| | |
+|---|---|
+| **Result** | a **negative** one: momentum ≈ 0 after costs (Sharpe 0.09), reversal outright unprofitable (−0.93) |
+| **Why** | reversal's Sharpe goes **+0.71 gross → −0.93 net**; it needs sub-**4.3 bps** execution to break even |
+| **Data audit** | flagged 20 defective rows (9 with impossible OHLC prices, 11 with missing fields) and 4 unadjusted corporate actions masquerading as ±50% returns |
+| **Bias quantified** | survivorship bias visible directly in the data — listed names rise 476 → 505 and never fall |
+| **Validation** | 30 unit tests, including a look-ahead test that rewrites the last day's returns and requires every earlier P&L to be unchanged |
+
+`pandas panel data` · `vectorized backtesting` · `information coefficient` ·
+`transaction-cost modeling` · `survivorship & look-ahead bias` · `robustness surfaces`
+
+---
+
 ## Roadmap
 
 | # | Project | Core skills | Status |
 |---|---|---|---|
 | 01 | [Rough Volatility Monte Carlo](01-rough-volatility-monte-carlo) | Monte Carlo, fractional processes, variance reduction, FFT | ✅ Done |
-| — | Systematic Cross-Sectional Equity Backtest | panel data, backtesting, factor signals, costs, risk metrics | ⏳ Planned |
+| 02 | [Systematic Equity Backtest](02-systematic-equity-backtest) | panel data, backtesting, factor signals, costs, risk metrics | ✅ Done |
 | — | Volatility & Pairs-Trading / Regime Study | time-series modeling, cointegration, EWMA volatility | ⏳ Planned |
 | — | ML Alpha Signals & PCA Factor Model | feature engineering, PCA, walk-forward validation | ⏳ Planned |
 | — | Portfolio Optimization & Efficient Frontier | mean-variance optimization, covariance estimation, risk parity | ⏳ Planned |
@@ -110,12 +132,18 @@ cd 01-rough-volatility-monte-carlo
 pip install -r requirements.txt
 python scripts/validate.py         # 6/6 gates
 python scripts/run_experiment.py   # the headline figure
+
+# Project 02 — needs the Kaggle CSV, see its data/README.md
+cd ../02-systematic-equity-backtest
+pip install -r requirements.txt
+python scripts/explore_data.py
+python scripts/run_backtest.py
 ```
 
 Run every test in the portfolio:
 
 ```bash
-pytest -q          # 25 tests
+pytest -q          # 55 tests
 ```
 
 ## Licence

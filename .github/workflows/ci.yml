@@ -52,3 +52,34 @@ jobs:
       - name: Run validation gates
         working-directory: 01-rough-volatility-monte-carlo
         run: python scripts/validate.py
+
+  smoke:
+    name: end-to-end smoke run (project 02, sample data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      # The full 28 MB dataset is not committed, so CI exercises the pipeline
+      # against the committed 10-ticker sample. This catches import errors,
+      # plotting regressions and schema drift without needing the download.
+      # --outdir keeps the run from overwriting the committed reports, which
+      # were generated from the full 619k-row panel.
+      - name: Profile the committed sample
+        working-directory: 02-systematic-equity-backtest
+        run: |
+          python scripts/explore_data.py \
+            --data data/sample_prices.csv \
+            --outdir "${RUNNER_TEMP}/smoke-reports"
+
+      - name: Confirm the committed reports were untouched
+        run: git diff --exit-code --stat

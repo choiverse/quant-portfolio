@@ -1,0 +1,8 @@
+,count,share of rows,verdict
+"Duplicated (date, ticker) rows",0,0.0,PASS
+Non-positive prices,0,0.0,PASS
+high < low,1,1.6154044972861205e-06,FAIL
+"close outside [low, high]",9,1.4538640475575084e-05,FAIL
+Missing close,0,0.0,PASS
+Zero volume days,4,6.461617989144482e-06,review
+|daily move| > 50% (split/error suspects),7,1.1307831481002843e-05,review

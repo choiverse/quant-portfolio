@@ -1,0 +1,9 @@
+,value
+Rows (raw),"619,040"
+Unique tickers (raw),505
+Tickers after ≥98% presence filter,476
+Trading days,"1,259"
+Date range,2013-02-08 → 2018-02-07
+Calendar span,5.0 years
+Panel fill rate (raw),97.4%
+Missing OHLC cells,27

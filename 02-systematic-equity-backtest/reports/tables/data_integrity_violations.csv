@@ -1,0 +1,21 @@
+date,Name,open,high,low,close,volume,reason
+2014-05-28,SPG,176.23,176.6,174.5,165.42,1383759,"close outside [low, high]"
+2014-06-30,CHK,30.43,31.1,30.37,29.39,8132836,"close outside [low, high]"
+2014-07-01,IP,50.85,51.07,50.57,50.09,5624981,"close outside [low, high]"
+2014-08-27,O,44.675,44.7,44.66,44.5272,185518,"close outside [low, high]"
+2016-03-14,BBY,33.55,33.75,33.08,32.72,6037794,"close outside [low, high]"
+2016-05-13,WRK,42.45,42.89,41.82,38.39,2153541,"close outside [low, high]"
+2016-05-19,LNT,35.19,35.785,35.085,17.87,1231722,"close outside [low, high]"
+2016-06-10,UA,35.75,36.41,35.7,35.54,616887,"close outside [low, high]"
+2014-05-19,AOS,23.89,23.595,23.85,24.445,1944854,high < low
+2015-05-12,VRTX,,,,124.08,569747,missing OHLC field
+2015-06-09,REGN,,,,526.09,12135,missing OHLC field
+2015-06-26,WRK,,,,61.9,100,missing OHLC field
+2015-07-17,DHR,,88.76,88.24,88.72,2056819,missing OHLC field
+2015-07-17,ES,,48.49,47.85,47.92,1246786,missing OHLC field
+2015-07-17,O,,47.31,46.83,46.99,1229513,missing OHLC field
+2016-01-12,DHR,,,,88.55,0,missing OHLC field
+2016-01-12,O,,,,52.43,0,missing OHLC field
+2016-04-07,UA,,,,41.56,0,missing OHLC field
+2016-07-01,FTV,,,,49.54,0,missing OHLC field
+2017-07-26,BHF,,,,69.0842,3,missing OHLC field
