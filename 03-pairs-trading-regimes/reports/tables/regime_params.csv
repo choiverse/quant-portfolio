@@ -1,0 +1,3 @@
+,mean_daily,ann_vol,stay_prob,expected_duration_days,long_run_share,realized_share
+calm,0.000976219,0.0845883,0.970572,33.9814,0.719796,0.77186
+turbulent,-0.000582217,0.19795,0.924405,13.2284,0.280204,0.22814
