@@ -1,8 +1,8 @@
 # Quant Research & Development Portfolio
 
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-55%20passing-brightgreen)
-![figures](https://img.shields.io/badge/figures-13%20generated-informational)
+![tests](https://img.shields.io/badge/tests-121%20passing-brightgreen)
+![figures](https://img.shields.io/badge/figures-20%20generated-informational)
 ![licence](https://img.shields.io/badge/licence-MIT-green)
 
 Self-contained quantitative-finance projects, each built end-to-end from raw
@@ -66,13 +66,34 @@ short-term reversal on the S&P 500 universe, 2013–2018, evaluated net of costs
 
 ---
 
+### [03 · Pairs Trading & Volatility Regimes](03-pairs-trading-regimes)
+
+Cointegration-based statistical arbitrage on the S&P 500, with the econometrics
+built rather than imported — ADF, Engle-Granger, GARCH(1,1) and a two-state
+hidden Markov model, none of them from `statsmodels`.
+
+[![pairs and regimes](03-pairs-trading-regimes/reports/pairs_regime_results.png)](03-pairs-trading-regimes)
+
+| | |
+|---|---|
+| **Result** | the unconditional net Sharpe of **0.10** is an average of **+1.67** in turbulent markets and **−0.44** in calm ones, and describes neither |
+| **Why** | the cost drag is identical across regimes (0.69% vs 0.70%/yr); only the gross edge changes, so break-even goes **1.2 bps → 44.2 bps** |
+| **Independent check** | the HMM's regime labels agree with the top tercile of EWMA volatility on **82.9%** of days, sharing no machinery |
+| **Validation** | 8/8 correctness gates · 66 unit tests · the project's own Monte Carlo reproduces MacKinnon's cointegration critical values to **0.004** |
+| **Notable finding** | ranking candidates by strength of evidence drags the median traded half-life from 6.1 days to **3.9** — the screen systematically selects the spreads a one-day execution lag cannot capture |
+
+`cointegration` · `unit-root testing` · `hidden Markov models` · `GARCH` ·
+`Baum-Welch EM` · `multiple-testing control` · `walk-forward validation`
+
+---
+
 ## Roadmap
 
 | # | Project | Core skills | Status |
 |---|---|---|---|
 | 01 | [Rough Volatility Monte Carlo](01-rough-volatility-monte-carlo) | Monte Carlo, fractional processes, variance reduction, FFT | ✅ Done |
 | 02 | [Systematic Equity Backtest](02-systematic-equity-backtest) | panel data, backtesting, factor signals, costs, risk metrics | ✅ Done |
-| — | Volatility & Pairs-Trading / Regime Study | time-series modeling, cointegration, EWMA volatility | ⏳ Planned |
+| 03 | [Pairs Trading & Volatility Regimes](03-pairs-trading-regimes) | cointegration, unit-root testing, GARCH, hidden Markov models | ✅ Done |
 | — | ML Alpha Signals & PCA Factor Model | feature engineering, PCA, walk-forward validation | ⏳ Planned |
 | — | Portfolio Optimization & Efficient Frontier | mean-variance optimization, covariance estimation, risk parity | ⏳ Planned |
 | — | Quant Research Tearsheet & Visualization | perceptually-sound financial charts, performance attribution | ⏳ Planned |
@@ -89,6 +110,10 @@ these projects are chosen to cover it:
   them before trusting them
 - **Statistics & ML** — signal construction, rank correlation, dimensionality
   reduction, validation without leakage
+- **Time-series econometrics** — unit-root and cointegration testing with the
+  critical values derived rather than imported, volatility models fitted by
+  maximum likelihood, latent-state models fitted by EM, and multiple-testing
+  arithmetic reported alongside every screen
 - **Financial reasoning** — derivative pricing, risk-adjusted performance,
   transaction costs, survivorship and look-ahead bias
 - **Software craft** — reusable, documented, *tested* Python packages, not
@@ -138,12 +163,20 @@ cd ../02-systematic-equity-backtest
 pip install -r requirements.txt
 python scripts/explore_data.py
 python scripts/run_backtest.py
+
+# Project 03 — reuses project 02's CSV, no second download needed
+cd ../03-pairs-trading-regimes
+pip install -r requirements.txt
+python scripts/validate.py         # 8/8 gates
+python scripts/screen_pairs.py
+python scripts/fit_regimes.py
+python scripts/run_backtest.py     # the headline figure
 ```
 
 Run every test in the portfolio:
 
 ```bash
-pytest -q          # 55 tests
+pytest -q          # 121 tests
 ```
 
 ## Licence

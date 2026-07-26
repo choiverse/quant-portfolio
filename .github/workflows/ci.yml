@@ -32,7 +32,7 @@ jobs:
         run: pytest -q
 
   validate:
-    name: correctness gates (project 01)
+    name: correctness gates (projects 01 & 03)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,12 +49,19 @@ jobs:
 
       # Statistical gates against closed forms and theoretical scaling laws.
       # Exits non-zero if any gate fails, so a broken simulator fails the build.
-      - name: Run validation gates
+      - name: Run validation gates (project 01)
         working-directory: 01-rough-volatility-monte-carlo
         run: python scripts/validate.py
 
+      # Same idea for the econometrics: simulated ADF critical values against
+      # MacKinnon's published table, parameter recovery for GARCH and the HMM,
+      # and an end-to-end look-ahead check. No market data needed.
+      - name: Run validation gates (project 03)
+        working-directory: 03-pairs-trading-regimes
+        run: python scripts/validate.py
+
   smoke:
-    name: end-to-end smoke run (project 02, sample data)
+    name: end-to-end smoke run (projects 02 & 03, sample data)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -74,12 +81,39 @@ jobs:
       # plotting regressions and schema drift without needing the download.
       # --outdir keeps the run from overwriting the committed reports, which
       # were generated from the full 619k-row panel.
-      - name: Profile the committed sample
+      - name: Profile the committed sample (project 02)
         working-directory: 02-systematic-equity-backtest
         run: |
           python scripts/explore_data.py \
             --data data/sample_prices.csv \
-            --outdir "${RUNNER_TEMP}/smoke-reports"
+            --outdir "${RUNNER_TEMP}/smoke-02"
+
+      # Exercises the full pipeline: two-stage screen, walk-forward slicing,
+      # regime fit and backtest. --quick skips the 12-cell robustness grid,
+      # which is 12 more walk-forwards and adds nothing to a smoke test.
+      - name: Screen pairs on the committed sample (project 03)
+        working-directory: 03-pairs-trading-regimes
+        run: |
+          python scripts/screen_pairs.py \
+            --data data/sample_prices.csv \
+            --top-k 200 \
+            --outdir "${RUNNER_TEMP}/smoke-03"
+
+      - name: Fit regimes on the committed sample (project 03)
+        working-directory: 03-pairs-trading-regimes
+        run: |
+          python scripts/fit_regimes.py \
+            --data data/sample_prices.csv \
+            --burn-in 400 \
+            --outdir "${RUNNER_TEMP}/smoke-03"
+
+      - name: Backtest on the committed sample (project 03)
+        working-directory: 03-pairs-trading-regimes
+        run: |
+          python scripts/run_backtest.py \
+            --data data/sample_prices.csv \
+            --top-k 200 --burn-in 400 --quick \
+            --outdir "${RUNNER_TEMP}/smoke-03"
 
       - name: Confirm the committed reports were untouched
         run: git diff --exit-code --stat

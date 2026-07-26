@@ -1,0 +1,7 @@
+quantity,value
+pairs possible in the universe,110215
+pairs tested (all windows),7000
+rejections at 5%,2293
+rejections expected under the null,350
+rejections expected had every pair been tested,38575.2
+pairs actually traded,140

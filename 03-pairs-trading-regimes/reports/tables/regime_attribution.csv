@@ -1,0 +1,3 @@
+regime,days,share_of_days,gross_ann_return,net_ann_return,ann_volatility,gross_sharpe,net_sharpe,hit_rate,net_sharpe_se,net_sharpe_boot_lo,net_sharpe_boot_hi,cost_drag_ann,avg_turnover,breakeven_bps
+calm,409,0.650238,0.000826336,-0.00606371,0.0137523,0.0598499,-0.440924,0.470297,0.785095,-1.5518,0.59742,0.00689005,0.0273415,1.19932
+turbulent,220,0.349762,0.0311539,0.0241071,0.0143998,2.14497,1.67413,0.565217,1.07323,0.035317,2.91754,0.0070468,0.0279635,44.21
