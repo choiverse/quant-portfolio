@@ -1,0 +1,14 @@
+,value
+n_assets,468.0
+n_obs,1258.0
+q,0.37201907790143085
+mp_upper_edge,2.591886411510182
+mp_lower_edge,0.15215174429268
+noise_variance_sigma2,0.7010229794159369
+mp_upper_edge_adjusted,1.816971934504549
+n_significant,14.0
+n_significant_adjusted,27.0
+largest_eigenvalue,139.92124563334164
+pc1_variance_share,0.2989770205840633
+pc1_corr_market,0.9965909376865922
+top5_variance_share,0.41646155867244056

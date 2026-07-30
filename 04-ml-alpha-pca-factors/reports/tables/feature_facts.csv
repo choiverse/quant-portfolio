@@ -1,0 +1,10 @@
+,value
+n_features,14
+n_rows,468936
+n_dates,1002
+split_date,2016-02-10
+n_sign_held,4
+max_abs_feature_corr,0.9313872692164847
+mean_abs_feature_corr,0.18768636831676286
+best_train_IR,0.2232698331888583
+best_oos_IR,0.2387037160826503
