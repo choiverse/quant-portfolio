@@ -9,6 +9,13 @@ Self-contained quantitative-finance projects, each built end-to-end from raw
 data or first principles and written up for **quant research / quant developer**
 work.
 
+**Jae Woong Choi** — Computational & Data Sciences, George Mason University Honors
+College (GPA 4.00, expected May 2028). Seeking a **summer 2027 quantitative research
+or quantitative developer internship**. F-1 student, eligible to work on CPT and OPT.
+[jchoi224@gmu.edu](mailto:jchoi224@gmu.edu) ·
+[LinkedIn](https://www.linkedin.com/in/choijaewoong/) ·
+[GitHub](https://github.com/choiverse) · resume available on request.
+
 Three rules every project follows:
 
 1. **Reproducible from code.** One command regenerates every figure and table in
