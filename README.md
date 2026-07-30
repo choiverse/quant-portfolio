@@ -1,9 +1,6 @@
 # Quant Research & Development Portfolio
 
-![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-121%20passing-brightgreen)
-![figures](https://img.shields.io/badge/figures-20%20generated-informational)
-![licence](https://img.shields.io/badge/licence-MIT-green)
+![python](https://img.shields.io/badge/python-3.11%2B-blue) ![tests](https://img.shields.io/badge/tests-121%20passing-brightgreen) ![figures](https://img.shields.io/badge/figures-20%20generated-informational) ![licence](https://img.shields.io/badge/licence-MIT-green)
 
 Self-contained quantitative-finance projects, each built end-to-end from raw
 data or first principles and written up for **quant research / quant developer**
