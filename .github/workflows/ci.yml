@@ -32,7 +32,7 @@ jobs:
         run: pytest -q
 
   validate:
-    name: correctness gates (projects 01 & 03)
+    name: correctness gates (projects 01, 03 & 04)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,8 +60,17 @@ jobs:
         working-directory: 03-pairs-trading-regimes
         run: python scripts/validate.py
 
+      # And for the factor model and the learners: an exactly-constructed
+      # covariance spectrum, the Marchenko-Pastur law against a simulated null,
+      # the ridge shrinkage identity, the binned split search against brute
+      # force, a purging check that carries its own unpurged control, and a
+      # size/power pair on the whole pipeline.
+      - name: Run validation gates (project 04)
+        working-directory: 04-ml-alpha-pca-factors
+        run: python scripts/validate.py
+
   smoke:
-    name: end-to-end smoke run (projects 02 & 03, sample data)
+    name: end-to-end smoke run (projects 02, 03 & 04, sample data)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -114,6 +123,34 @@ jobs:
             --data data/sample_prices.csv \
             --top-k 200 --burn-in 400 --quick \
             --outdir "${RUNNER_TEMP}/smoke-03"
+
+      # Project 04's pipeline is the longest in the portfolio, so the smoke run
+      # uses the 60-ticker sample, a shorter first training window and --quick,
+      # which cuts the boosted ensemble and skips the 12-cell robustness grid.
+      # It still exercises every stage: PCA, features, purged folds, all three
+      # learners, portfolio construction and the factor attribution.
+      - name: Fit the factor model on the committed sample (project 04)
+        working-directory: 04-ml-alpha-pca-factors
+        run: |
+          python scripts/fit_factors.py \
+            --data data/sample_prices.csv \
+            --outdir "${RUNNER_TEMP}/smoke-04"
+
+      - name: Score the features on the committed sample (project 04)
+        working-directory: 04-ml-alpha-pca-factors
+        run: |
+          python scripts/explore_features.py \
+            --data data/sample_prices.csv \
+            --initial-train 400 \
+            --outdir "${RUNNER_TEMP}/smoke-04"
+
+      - name: Train and backtest on the committed sample (project 04)
+        working-directory: 04-ml-alpha-pca-factors
+        run: |
+          python scripts/run_models.py \
+            --data data/sample_prices.csv \
+            --initial-train 400 --quick \
+            --outdir "${RUNNER_TEMP}/smoke-04"
 
       - name: Confirm the committed reports were untouched
         run: git diff --exit-code --stat
